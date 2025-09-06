@@ -1,9 +1,13 @@
+import { createRouter, RouterProvider } from "@tanstack/react-router";
+import { routeTree } from "./routeTree.gen";
+
 function App() {
-  return (
-    <>
-      <h1>MyChatProyect</h1>
-    </>
-  );
+  const router = createRouter({
+    routeTree,
+    defaultPreload: "intent",
+    scrollRestoration: true,
+  });
+  return <RouterProvider router={router} />;
 }
 
 export default App;

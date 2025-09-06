@@ -27,6 +27,11 @@
 -> Gestionar mensajes, eliminar, editar, etc. buscando sea algo parecido a WhatsApp.\
 \
 -> los usuarios pueden bloquear a otros usuarios, para no recibir mensajes de estos.\
+
+-> Dependencias -Client
+	*axios
+	*zustand
+
 \
 \
 \

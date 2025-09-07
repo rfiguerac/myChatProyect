@@ -15,6 +15,7 @@ import { useAuthStore } from "@/store/authStore";
 import { useEffect, useRef, useState } from "react";
 
 import { type ChatMessage } from "../../../../common/interfaces/ChatMessage";
+import { Separator } from "../ui/separator";
 
 export const ChatBox = () => {
   const { user } = useAuthStore();
@@ -31,8 +32,8 @@ export const ChatBox = () => {
   };
 
   return (
-    <div className="flex min-h-svh items-center justify-center">
-      <Card className="w-full max-w-sm">
+    <div className="flex h-dvh items-center justify-center">
+      <Card className="h-4/5 w-full max-w-sm sm:max-w-lg md:max-w-xl lg:max-w-3xl flex flex-col">
         <CardHeader>
           <CardTitle>
             <Avatar className="rounded-lg">
@@ -45,9 +46,10 @@ export const ChatBox = () => {
               Cerrar Sesión
             </Button> */}
           </CardAction>
+          <Separator />
         </CardHeader>
-        <CardContent>
-          <ScrollArea className="h-72 w-full">
+        <CardContent className="flex-grow">
+          <ScrollArea className="h-full w-full">
             <div className="flex flex-col gap-2">
               {messages.map((message) => (
                 <div
@@ -65,12 +67,13 @@ export const ChatBox = () => {
           </ScrollArea>
         </CardContent>
         <CardFooter>
-          <div className="flex w-full max-w-sm items-center gap-2">
+          <div className="flex w-full items-center gap-2">
             <form className="flex w-full gap-2" onSubmit={handleSubmitMessage}>
               <Input
                 type="text"
                 name="message"
                 placeholder="Type your message..."
+                className="flex-grow"
               />
               <Button type="submit" variant="outline">
                 <Send />

@@ -1,10 +1,12 @@
 import { ChatBox } from "@/components/chat/ChatBox";
+import Layout from "@/layout/Layout";
 
 const Dashboard = () => {
   return (
     <>
-      <h1>Dashboard</h1>
-      <ChatBox />
+      <Layout>
+        <ChatBox />
+      </Layout>
     </>
   );
 };

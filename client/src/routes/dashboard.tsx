@@ -8,7 +8,7 @@ export const Route = createFileRoute("/dashboard")({
   beforeLoad: ({ context }) => {
     const { user } = useAuthStore.getState();
     if (!user) {
-      throw redirect({ to: "/login" });
+      throw redirect({ to: "/" });
     }
     return context;
   },

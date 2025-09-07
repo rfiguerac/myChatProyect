@@ -21,6 +21,7 @@ interface AuthState {
   user: User | null;
   loading: boolean;
   init: () => void;
+  logout: () => Promise<void>;
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
@@ -32,5 +33,9 @@ export const useAuthStore = create<AuthState>((set) => ({
     });
 
     return unsubscribe;
+  },
+  logout: async () => {
+    await auth.signOut();
+    set({ user: null });
   },
 }));

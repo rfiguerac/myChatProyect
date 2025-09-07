@@ -1,6 +1,5 @@
 import {
   Card,
-  CardAction,
   CardContent,
   CardFooter,
   CardHeader,
@@ -40,12 +39,6 @@ export const ChatBox = () => {
               <AvatarImage src={user?.photoURL!} alt="@user-avatar" />
             </Avatar>
           </CardTitle>
-          <CardAction>
-            {/* <Button onClick={handleSignOut}>
-              <LogOut />
-              Cerrar Sesión
-            </Button> */}
-          </CardAction>
           <Separator />
         </CardHeader>
         <CardContent className="flex-grow">

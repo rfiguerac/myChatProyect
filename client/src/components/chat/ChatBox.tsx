@@ -31,8 +31,8 @@ export const ChatBox = () => {
   };
 
   return (
-    <div className="flex h-dvh items-center justify-center">
-      <Card className="h-4/5 w-full max-w-sm sm:max-w-lg md:max-w-xl lg:max-w-3xl flex flex-col">
+    <div className="flex  items-center justify-center">
+      <Card className=" w-full max-w-sm sm:max-w-lg md:max-w-xl lg:max-w-3xl flex flex-col">
         <CardHeader>
           <CardTitle>
             <Avatar className="rounded-lg">

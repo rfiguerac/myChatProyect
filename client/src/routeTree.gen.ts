@@ -11,6 +11,8 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as DashboardInboxRouteImport } from './routes/dashboard.inbox'
+import { Route as DashboardInboxChatChatIdRouteImport } from './routes/dashboard.inbox.chat.$chatId'
 
 const DashboardRoute = DashboardRouteImport.update({
   id: '/dashboard',
@@ -22,31 +24,57 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DashboardInboxRoute = DashboardInboxRouteImport.update({
+  id: '/inbox',
+  path: '/inbox',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardInboxChatChatIdRoute =
+  DashboardInboxChatChatIdRouteImport.update({
+    id: '/chat/$chatId',
+    path: '/chat/$chatId',
+    getParentRoute: () => DashboardInboxRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/dashboard': typeof DashboardRoute
+  '/dashboard': typeof DashboardRouteWithChildren
+  '/dashboard/inbox': typeof DashboardInboxRouteWithChildren
+  '/dashboard/inbox/chat/$chatId': typeof DashboardInboxChatChatIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/dashboard': typeof DashboardRoute
+  '/dashboard': typeof DashboardRouteWithChildren
+  '/dashboard/inbox': typeof DashboardInboxRouteWithChildren
+  '/dashboard/inbox/chat/$chatId': typeof DashboardInboxChatChatIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/dashboard': typeof DashboardRoute
+  '/dashboard': typeof DashboardRouteWithChildren
+  '/dashboard/inbox': typeof DashboardInboxRouteWithChildren
+  '/dashboard/inbox/chat/$chatId': typeof DashboardInboxChatChatIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/dashboard'
+  fullPaths:
+    | '/'
+    | '/dashboard'
+    | '/dashboard/inbox'
+    | '/dashboard/inbox/chat/$chatId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/dashboard'
-  id: '__root__' | '/' | '/dashboard'
+  to: '/' | '/dashboard' | '/dashboard/inbox' | '/dashboard/inbox/chat/$chatId'
+  id:
+    | '__root__'
+    | '/'
+    | '/dashboard'
+    | '/dashboard/inbox'
+    | '/dashboard/inbox/chat/$chatId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  DashboardRoute: typeof DashboardRoute
+  DashboardRoute: typeof DashboardRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -65,12 +93,50 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/dashboard/inbox': {
+      id: '/dashboard/inbox'
+      path: '/inbox'
+      fullPath: '/dashboard/inbox'
+      preLoaderRoute: typeof DashboardInboxRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/inbox/chat/$chatId': {
+      id: '/dashboard/inbox/chat/$chatId'
+      path: '/chat/$chatId'
+      fullPath: '/dashboard/inbox/chat/$chatId'
+      preLoaderRoute: typeof DashboardInboxChatChatIdRouteImport
+      parentRoute: typeof DashboardInboxRoute
+    }
   }
 }
 
+interface DashboardInboxRouteChildren {
+  DashboardInboxChatChatIdRoute: typeof DashboardInboxChatChatIdRoute
+}
+
+const DashboardInboxRouteChildren: DashboardInboxRouteChildren = {
+  DashboardInboxChatChatIdRoute: DashboardInboxChatChatIdRoute,
+}
+
+const DashboardInboxRouteWithChildren = DashboardInboxRoute._addFileChildren(
+  DashboardInboxRouteChildren,
+)
+
+interface DashboardRouteChildren {
+  DashboardInboxRoute: typeof DashboardInboxRouteWithChildren
+}
+
+const DashboardRouteChildren: DashboardRouteChildren = {
+  DashboardInboxRoute: DashboardInboxRouteWithChildren,
+}
+
+const DashboardRouteWithChildren = DashboardRoute._addFileChildren(
+  DashboardRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  DashboardRoute: DashboardRoute,
+  DashboardRoute: DashboardRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
